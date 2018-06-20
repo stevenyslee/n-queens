@@ -132,9 +132,9 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow, row) {
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       let pieceCount = 0;
-      row = row || 0;
+      let row = 0;
       for (let i = majorDiagonalColumnIndexAtFirstRow; i < this.attributes.n; i++) {
         if (this.attributes[row++][i] !== 0) {
           pieceCount++;
@@ -149,7 +149,6 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       for (let i = 0; i < this.attributes.n; i++) {
-        let pieceCount = 0;
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
@@ -175,10 +174,10 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow, row) {
+    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       let pieceCount = 0;
-      row = row || 0;
-      for (let i = this.attributes.n; i > 0; i--) {
+      row = 0;
+      for (let i = minorDiagonalColumnIndexAtFirstRow; i >= 0; i--) {
         if (this.attributes[row++][i] !== 0) {
           pieceCount++;
         }
