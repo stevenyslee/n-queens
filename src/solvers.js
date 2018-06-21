@@ -43,22 +43,106 @@ window.findNRooksSolution = function(n) {
 // nreturn the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 // Time Complexity: O(n^n)
 window.countNRooksSolutions = function(n) {
+  if (n === 0) {
+    return 0;
+  }
+  
+  if (n === 1) {
+    return 1;
+  }
   var solutionCount = 0; //fixme
   var board = new Board({'n': n});
 
-  var generateBoard = function(rowIndex) {
+  // var generateBoard = function(rowIndex) {
+  //   if (rowIndex === n) {
+  //     solutionCount++;
+  //     return;
+  //   }
+
+  //   for (let i = 0; i < n; i++) {
+  //     board.attributes[rowIndex][i] = 1;
+  //     if (!board.hasAnyRooksConflicts()) {
+  //       generateBoard(rowIndex + 1);
+  //     } 
+  //     board.attributes[rowIndex][i] = 0;
+  //   }
+  // };
+  
+  var generateBoard = function(rowIndex, isMiddle) {
     if (rowIndex === n) {
       solutionCount++;
-      return;
+      return true;
     }
-    for (let i = 0; i < n; i++) {
-      board.attributes[rowIndex][i] = 1;
-      if (!board.hasAnyRooksConflicts()) {
-        generateBoard(rowIndex + 1);
-      } 
-      board.attributes[rowIndex][i] = 0;
+    
+    if (board.get('n') % 2 === 0) {
+      /// EVEN
+      if (rowIndex === 0) {
+        //first row
+        for (let i = 0; i < (n / 2); i++) {
+          board.attributes[rowIndex][i] = 1;
+          if (!board.hasAnyRooksConflicts()) {
+            generateBoard(rowIndex + 1); 
+          } 
+          board.attributes[rowIndex][i] = 0;
+        }
+      } else {
+        // Not first row 
+        for (let i = 0; i < n; i++) {
+          board.attributes[rowIndex][i] = 1;
+          if (!board.hasAnyRooksConflicts()) {
+            var hasSolution = generateBoard(rowIndex + 1);
+            if (hasSolution) {
+              solutionCount++;
+            }
+          } 
+          board.attributes[rowIndex][i] = 0;
+        } 
+      }
+      
+    } else {
+      /// ODD  
+      if (rowIndex === 0) {
+        //first row
+        for (let i = 0; i < Math.floor(n / 2) + 1; i++) {
+          board.attributes[rowIndex][i] = 1;
+          if (!board.hasAnyRooksConflicts()) {
+            if (i === Math.floor(n / 2) ) {
+              generateBoard(rowIndex + 1, true);  
+            } else {
+              generateBoard(rowIndex + 1); 
+            }
+          } 
+          board.attributes[rowIndex][i] = 0;
+        }
+  
+      } else {
+        // Not first row
+        if (isMiddle) {
+          for (let i = 0; i < n; i++) {
+            board.attributes[rowIndex][i] = 1;
+            if (!board.hasAnyRooksConflicts()) {
+              generateBoard(rowIndex + 1, true);
+            } 
+            board.attributes[rowIndex][i] = 0;
+          }  
+        } else {
+          for (let i = 0; i < n; i++) {
+            board.attributes[rowIndex][i] = 1;
+            if (!board.hasAnyRooksConflicts()) {
+              var hasSolution = generateBoard(rowIndex + 1);
+              if (hasSolution) {
+                solutionCount++;
+              }
+            } 
+            board.attributes[rowIndex][i] = 0;
+          }
+        }
+        
+      }
+      
     }
   };
+  
 
   generateBoard(0);
 
@@ -96,6 +180,10 @@ window.findNQueensSolution = function(n) {
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 // Time Complexity: O(n^n)
 window.countNQueensSolutions = function(n) {
+  if (n === 2 || n === 3) {
+    return 0;
+  }
+  
   var solutionCount = 0; //fixme
   var board = new Board({'n': n});
 
