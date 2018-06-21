@@ -135,8 +135,8 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       let pieceCount = 0;
       let row = 0;
-      for (let i = majorDiagonalColumnIndexAtFirstRow; i < this.attributes.n; i++) {
-        if (this.attributes[row++][i] !== 0) {
+      for (let i = 0; i < this.attributes.n; i++) {
+        if (this.attributes[row++][majorDiagonalColumnIndexAtFirstRow++] === 1) {
           pieceCount++;
         }
       }
@@ -148,21 +148,9 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      for (let i = 0; i < this.attributes.n; i++) {
+      for (let i = 0 - (this.attributes.n - 1); i < this.attributes.n; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
-        }
-      }
-      for (let j = 1; j < this.attributes.n; j++) {
-        let pieceCount = 0;
-        let column = 0;
-        for (let i = j; i < this.attributes.n; i++) {
-          if (this.attributes[i][column++]) {
-            pieceCount++;
-          }
-          if (pieceCount > 1) {
-            return true;
-          }
         }
       }
       return false; // fixme
@@ -176,9 +164,8 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       let pieceCount = 0;
-      row = 0;
-      for (let i = minorDiagonalColumnIndexAtFirstRow; i >= 0; i--) {
-        if (this.attributes[row++][i] !== 0) {
+      for (let i = 0; i < this.attributes.n; i++) {
+        if (this.attributes[i][minorDiagonalColumnIndexAtFirstRow--] === 1) {
           pieceCount++;
         }
       }
@@ -190,21 +177,9 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (let i = 0; i < this.attributes.n; i++) {
+      for (let i = 0; i < (this.attributes.n * 2) - 1; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
-        }
-      }
-      for (let j = 1; j < this.attributes.n; j++) {
-        let pieceCount = 0;
-        let column = this.attributes.n;
-        for (let i = j; i < this.attributes.n; i++) {
-          if (this.attributes[i][column--]) {
-            pieceCount++;
-          }
-          if (pieceCount > 1) {
-            return true;
-          }
         }
       }
       return false; // fixme
