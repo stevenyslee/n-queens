@@ -86,6 +86,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n)
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
@@ -96,7 +97,7 @@
       }
       return false; // fixme
     },
-
+    //Time Complexity: O(n^2)
 
 
     // COLUMNS - run from top to bottom
@@ -115,6 +116,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n)
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
@@ -125,6 +127,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n^2)
 
 
 
@@ -145,6 +148,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n)
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
@@ -155,6 +159,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n^2)
 
 
 
@@ -174,6 +179,7 @@
       }
       return false; // fixme
     },
+    //Time Complexity: O(n)
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
@@ -184,6 +190,7 @@
       }
       return false; // fixme
     }
+    //Time Complexity: O(n^2)
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
